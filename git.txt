@@ -1,3 +1,0 @@
-git remote rename origin upstream
-git remote add origin https://github.com/mcsnyk/ADDA_demo.git
-git push origin master 
