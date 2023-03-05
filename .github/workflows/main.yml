@@ -12,13 +12,18 @@ jobs:
     - name: Use Node.js for installing Snyk 
       uses: actions/setup-node@v2
       with:
-        node-version: 18.4
+        node-version: 16.x
 
     # Install & prepare Snyk
     - run: npm install --location=global snyk
+    - run: npm install snyk-to-html -g
       
     - run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
-    - name: Snyk Code Tests
+    - name: Snyk Code CLI Tests
       run: snyk code test
       continue-on-error: true
+    
+    - name: Snyk Code reporting
+      run: snyk code test --sarif | snyk-to-html>results.html
+      continue-on-error: true      
