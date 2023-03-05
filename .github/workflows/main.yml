@@ -25,5 +25,13 @@ jobs:
       continue-on-error: true
     
     - name: Snyk Code reporting
-      run: snyk code test --sarif | snyk-to-html>results.html
-      continue-on-error: true      
+      run: |
+          snyk test --json | snyk-to-html -o result.html
+          mkdir downloads
+          cp -v /home/runner/work/ADDA_demo/ADDA_demo/*.html /home/runner/work/ADDA_demo/ADDA_demo/downloads
+    
+    - name: Use the Upload Artifact GitHub Action
+      uses: actions/upload-artifact@v2
+      with:
+          name: results
+          path: downloads  
